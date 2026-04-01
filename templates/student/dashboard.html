@@ -1,0 +1,149 @@
+{% extends 'common/base.html' %}
+
+{% block title %}Student Dashboard - IV Portal{% endblock %}
+
+{% block content %}
+<!-- Welcome Banner -->
+<div class="row mb-5">
+    <div class="col-12">
+        <div class="card border-0 shadow-lg overflow-hidden text-white"
+            style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 1rem;">
+            <div class="card-body p-5 position-relative">
+                <div class="position-absolute top-0 end-0 p-4 opacity-25">
+                    <i class="fas fa-university fa-10x"></i>
+                </div>
+                <h1 class="display-5 fw-bold mb-2">Welcome back, {{ student.name.split()[0] }}! 👋</h1>
+                <p class="lead mb-4 opacity-75">Track your industrial visits, manage applications, and download passes.
+                </p>
+                <div class="d-flex align-items-center">
+                    <span class="badge bg-white text-primary px-3 py-2 rounded-pill me-3 shadow-sm">
+                        <i class="fas fa-id-badge me-1"></i> {{ student.register_number }}
+                    </span>
+                    <span class="badge bg-white text-info px-3 py-2 rounded-pill shadow-sm">
+                        <i class="fas fa-graduation-cap me-1"></i> {{ student.department }} - {{ student.year }} Year
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Stats Cards -->
+<div class="row g-4 mb-5">
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm h-100 hover-transform">
+            <div class="card-body p-4 d-flex align-items-center">
+                <div class="bg-primary bg-opacity-10 text-primary rounded-circle p-3 me-3">
+                    <i class="fas fa-paper-plane fa-2x"></i>
+                </div>
+                <div>
+                    <h6 class="text-uppercase text-muted small fw-bold mb-1">Total Applied</h6>
+                    <h2 class="mb-0 fw-bold">{{ total_applied }}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm h-100 hover-transform">
+            <div class="card-body p-4 d-flex align-items-center">
+                <div class="bg-success bg-opacity-10 text-success rounded-circle p-3 me-3">
+                    <i class="fas fa-check-circle fa-2x"></i>
+                </div>
+                <div>
+                    <h6 class="text-uppercase text-muted small fw-bold mb-1">Approved</h6>
+                    <h2 class="mb-0 fw-bold">{{ approved_count }}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm h-100 hover-transform">
+            <div class="card-body p-4 d-flex align-items-center">
+                <div class="bg-warning bg-opacity-10 text-warning rounded-circle p-3 me-3">
+                    <i class="fas fa-hourglass-half fa-2x"></i>
+                </div>
+                <div>
+                    <h6 class="text-uppercase text-muted small fw-bold mb-1">Pending</h6>
+                    <h2 class="mb-0 fw-bold">{{ pending_count }}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Actions & Notifications -->
+<div class="row g-4">
+    <div class="col-lg-7">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-header bg-white border-0 pt-4 px-4 pb-0">
+                <h5 class="fw-bold mb-0"><i class="fas fa-bolt text-warning me-2"></i>Quick Actions</h5>
+            </div>
+            <div class="card-body p-4">
+                <div class="d-grid gap-3">
+                    <a href="{{ url_for('student.view_visits') }}"
+                        class="btn btn-outline-primary p-4 text-start rounded-3 shadow-sm d-flex align-items-center transition-all">
+                        <div class="bg-primary text-white p-3 rounded-circle me-3">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <div>
+                            <h5 class="fw-bold mb-1">Find & Book Visits</h5>
+                            <small class="text-muted">Browse upcoming industrial visits and reserve your seat.</small>
+                        </div>
+                        <i class="fas fa-chevron-right ms-auto text-muted"></i>
+                    </a>
+
+                    <a href="{{ url_for('student.view_bookings') }}"
+                        class="btn btn-outline-dark p-4 text-start rounded-3 shadow-sm d-flex align-items-center transition-all">
+                        <div class="bg-dark text-white p-3 rounded-circle me-3">
+                            <i class="fas fa-ticket-alt"></i>
+                        </div>
+                        <div>
+                            <h5 class="fw-bold mb-1">My Bookings</h5>
+                            <small class="text-muted">Track application status and download permission letters.</small>
+                        </div>
+                        <i class="fas fa-chevron-right ms-auto text-muted"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-5">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-header bg-white border-0 pt-4 px-4 pb-0">
+                <h5 class="fw-bold mb-0"><i class="fas fa-bell text-danger me-2"></i>Recent Activity</h5>
+            </div>
+            <div class="card-body p-4">
+                <div class="list-group list-group-flush">
+                    <div class="list-group-item border-0 px-0 py-3 d-flex align-items-start">
+                        <div class="bg-info bg-opacity-10 text-info p-2 rounded-circle me-3">
+                            <i class="fas fa-info"></i>
+                        </div>
+                        <div>
+                            <h6 class="fw-bold mb-1">Portal Updated</h6>
+                            <small class="text-muted d-block">The IV Portal has a new look! Check out the improved
+                                booking flow.</small>
+                            <small class="text-muted fst-italic">Just now</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .hover-transform {
+        transition: transform 0.3s ease;
+    }
+
+    .hover-transform:hover {
+        transform: translateY(-5px);
+    }
+
+    .btn-outline-primary:hover,
+    .btn-outline-dark:hover {
+        transform: translateY(-2px);
+    }
+</style>
+{% endblock %}

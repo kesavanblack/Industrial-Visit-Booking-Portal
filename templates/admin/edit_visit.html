@@ -1,0 +1,77 @@
+{% extends 'common/base.html' %}
+
+{% block title %}Edit Visit - IV Portal{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-9 col-lg-7">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 bg-success text-white">
+                <h6 class="m-0 font-weight-bold"><i class="fas fa-edit me-2"></i>Edit Visit Details</h6>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('admin.edit_visit', visit_id=visit.id) }}">
+                    <!-- Industry Selection (Can be changed) -->
+                    <div class="mb-3">
+                        <label for="industry" class="form-label">Industry</label>
+                        <select class="form-select" id="industry" name="industry" required>
+                            {% for industry in industries %}
+                            <option value="{{ industry.id }}" {% if visit.industry_id==industry.id %}selected{% endif
+                                %}>{{ industry.name }} ({{ industry.location }})</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Visit Title</label>
+                        <input type="text" class="form-control" id="title" name="title" value="{{ visit.title }}"
+                            required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description (Itinerary)</label>
+                        <textarea class="form-control" id="description" name="description" rows="4"
+                            required>{{ visit.description }}</textarea>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="visit_date" class="form-label">Visit Date</label>
+                            <input type="date" class="form-control" id="visit_date" name="visit_date"
+                                value="{{ visit.visit_date.strftime('%Y-%m-%d') }}" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="fee" class="form-label">Fee (₹)</label>
+                            <input type="number" class="form-control" id="fee" name="fee" value="{{ visit.fee }}"
+                                step="0.01" required>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="total_seats" class="form-label">Total Seats</label>
+                            <input type="number" class="form-control" id="total_seats" name="total_seats"
+                                value="{{ visit.total_seats }}" required>
+                            <div class="form-text">Changing this will adjust available seats.</div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="faculty" class="form-label">Faculty In-Charge</label>
+                            <select class="form-select" id="faculty" name="faculty" required>
+                                {% for faculty in faculties %}
+                                <option value="{{ faculty.id }}" {% if visit.faculty_id==faculty.id %}selected{% endif
+                                    %}>{{ faculty.name }} - {{ faculty.department }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <a href="{{ url_for('admin.manage_visits') }}" class="btn btn-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-success">Update Visit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,106 @@
+{% extends 'common/base.html' %}
+
+{% block title %}Upcoming Visits - IV Portal{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-4 border-bottom">
+    <h1 class="h2"><i class="fas fa-calendar-alt me-2 text-primary"></i>Upcoming Industrial Visits</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <span class="text-muted small align-self-center">Apply early to secure your seat!</span>
+    </div>
+</div>
+
+<div class="row g-4">
+    {% for visit in visits %}
+    <div class="col-md-6 col-xl-4">
+        <div class="card h-100 border-0 shadow-lg hover-transform transition-all">
+            <div class="card-header bg-gradient-primary text-white py-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="card-title mb-0 fw-bold"><i class="fas fa-industry me-2"></i>{{ visit.industry.name }}
+                    </h5>
+                    <span class="badge bg-white text-primary rounded-pill">₹{{ visit.fee }}</span>
+                </div>
+            </div>
+            <div class="card-body">
+                <h6 class="card-subtitle mb-3 text-muted border-bottom pb-2">
+                    <i class="fas fa-map-marker-alt me-1 text-danger"></i> {{ visit.industry.location }}
+                </h6>
+                <h5 class="fw-bold mb-3 text-dark">{{ visit.title }}</h5>
+                <p class="card-text text-secondary mb-4">{{ visit.description }}</p>
+
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <small class="text-uppercase text-muted fw-bold" style="font-size: 0.7rem;">Visit Date</small>
+                        <div class="d-flex align-items-center mt-1">
+                            <i class="fas fa-calendar-day text-success me-2"></i>
+                            <span class="fw-bold">{{ visit.visit_date.strftime('%d %b, %Y') }}</span>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <small class="text-uppercase text-muted fw-bold" style="font-size: 0.7rem;">Organizer</small>
+                        <div class="d-flex align-items-center mt-1">
+                            <i class="fas fa-user-tie text-info me-2"></i>
+                            <span class="small fw-bold">{{ visit.faculty.name or "Faculty" }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between mb-1">
+                        <small class="fw-bold">Seat Availability</small>
+                        <small
+                            class="fw-bold {% if visit.available_seats < 5 %}text-danger{% else %}text-success{% endif %}">
+                            {{ visit.available_seats }} / {{ visit.total_seats }}
+                        </small>
+                    </div>
+                    {% set progress = ((visit.total_seats - visit.available_seats) / visit.total_seats) * 100 %}
+                    <div class="progress" style="height: 10px;">
+                        <div class="progress-bar {% if visit.available_seats < 5 %}bg-danger{% else %}bg-success{% endif %}"
+                            role="progressbar" style="width: {{ progress }}%;" aria-valuenow="{{ progress }}"
+                            aria-valuemin="0" aria-valuemax="100">
+                        </div>
+                    </div>
+                    {% if visit.available_seats < 5 and visit.available_seats> 0 %}
+                        <small class="text-danger mt-1 d-block"><i class="fas fa-exclamation-circle me-1"></i>Hurry!
+                            Filling fast.</small>
+                        {% endif %}
+                </div>
+            </div>
+            <div class="card-footer bg-white border-top-0 pb-4 pt-0">
+                {% if visit.available_seats > 0 %}
+                <a href="{{ url_for('student.book_visit', visit_id=visit.id) }}"
+                    class="btn btn-primary w-100 shadow-sm py-2 fw-bold">
+                    <i class="fas fa-ticket-alt me-2"></i>Apply For Visit
+                </a>
+                {% else %}
+                <button class="btn btn-secondary w-100 py-2 fw-bold" disabled>
+                    <i class="fas fa-ban me-2"></i>Sold Out
+                </button>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="col-12 text-center py-5">
+        <div class="card shadow-sm border-0 bg-light">
+            <div class="card-body py-5">
+                <i class="fas fa-calendar-times fa-4x text-muted mb-3"></i>
+                <h3 class="text-muted">No Upcoming Visits</h3>
+                <p class="text-muted">Check back later for new industrial visit opportunities.</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<style>
+    .hover-transform {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .hover-transform:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 1rem 3rem rgba(0, 0, 0, .175) !important;
+    }
+</style>
+{% endblock %}

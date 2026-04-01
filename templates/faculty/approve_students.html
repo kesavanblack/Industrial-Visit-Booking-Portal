@@ -1,0 +1,66 @@
+{% extends 'common/base.html' %}
+
+{% block title %}Approve Students - IV Portal{% endblock %}
+
+{% block content %}
+<div class="row mb-3">
+    <div class="col-md-12">
+        <a href="{{ url_for('faculty.dashboard') }}" class="btn btn-outline-secondary">&larr; Back to Dashboard</a>
+        <h3 class="mt-2">Manage Students for: {{ visit.title }}</h3>
+        <p class="text-muted">{{ visit.industry.name }} | {{ visit.visit_date }}</p>
+    </div>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-striped shadow-sm bg-white">
+        <thead>
+            <tr>
+                <th>Reg No</th>
+                <th>Name</th>
+                <th>Dept</th>
+                <th>Year</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for booking in bookings %}
+            <tr>
+                <td>{{ booking.student_profile.register_number }}</td>
+                <td>{{ booking.student_profile.name }}</td>
+                <td>{{ booking.student_profile.department }}</td>
+                <td>{{ booking.student_profile.year }}</td>
+                <td>
+                    {% if booking.status == 'Pending' %}
+                    <span class="badge bg-warning text-dark">Pending</span>
+                    {% elif booking.status == 'Approved' %}
+                    <span class="badge bg-success">Approved</span>
+                    {% elif booking.status == 'Confirmed' %}
+                    <span class="badge bg-success">Confirmed</span>
+                    {% elif booking.status == 'Rejected' %}
+                    <span class="badge bg-danger">Rejected</span>
+                    {% endif %}
+                </td>
+                <td>
+                    <form method="POST" class="d-flex gap-2">
+                        <input type="hidden" name="booking_id" value="{{ booking.id }}">
+
+                        {% if booking.status == 'Pending' %}
+                        <button type="submit" name="action" value="approve"
+                            class="btn btn-sm btn-success">Approve</button>
+                        <button type="submit" name="action" value="reject" class="btn btn-sm btn-danger">Reject</button>
+                        {% else %}
+                        <span class="text-muted">Processed</span>
+                        {% endif %}
+                    </form>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="6" class="text-center">No student applications yet.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

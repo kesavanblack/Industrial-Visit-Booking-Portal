@@ -1,0 +1,45 @@
+{% extends 'common/base.html' %}
+
+{% block title %}Upload Report - IV Portal{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow mt-4">
+            <div class="card-header bg-dark text-white">
+                <h4>Upload Visit Report</h4>
+            </div>
+            <div class="card-body">
+                <form method="POST" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="visit" class="form-label">Select Visit</label>
+                        <select class="form-select" id="visit" name="visit">
+                            <option>Select completed visit...</option>
+                            <!-- Would usually loop assigned_visits here -->
+                            <option>Visit to InfoTech Solutions (2025-10-15)</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="report" class="form-label">Upload Report (PDF)</label>
+                        <input class="form-control" type="file" id="report" name="report" accept=".pdf">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="photos" class="form-label">Upload Photos (Optional)</label>
+                        <input class="form-control" type="file" id="photos" name="photos" multiple accept="image/*">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="comments" class="form-label">Additional Comments</label>
+                        <textarea class="form-control" id="comments" rows="3"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Upload Report</button>
+                    <a href="{{ url_for('faculty.dashboard') }}" class="btn btn-secondary">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

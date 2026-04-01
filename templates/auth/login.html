@@ -1,0 +1,80 @@
+{% extends 'common/base.html' %}
+
+{% block title %}Login - IV Portal{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+        <div class="card shadow-lg mt-5 border-0">
+            <div class="card-header bg-primary text-white text-center py-4">
+                <h3 class="mb-0"><i class="fas fa-sign-in-alt me-2"></i>Login</h3>
+                <p class="mb-0 text-white-50">Select your role to continue</p>
+            </div>
+            <div class="card-body p-4">
+                <form method="POST" action="{{ url_for('auth.login') }}">
+
+                    <div class="mb-4">
+                        <label class="form-label fw-bold mb-3 d-block">I am a:</label>
+                        <div class="row g-2">
+                            <div class="col-4">
+                                <input type="radio" class="btn-check" name="role" id="role_student" value="student" {%
+                                    if not request.form.get('role') or request.form.get('role')=='student' %}checked{%
+                                    endif %}>
+                                <label
+                                    class="btn btn-outline-primary w-100 h-100 py-3 d-flex flex-column align-items-center justify-content-center"
+                                    for="role_student">
+                                    <i class="fas fa-user-graduate fa-2x mb-2"></i>
+                                    <span class="small">Student</span>
+                                </label>
+                            </div>
+                            <div class="col-4">
+                                <input type="radio" class="btn-check" name="role" id="role_faculty" value="faculty" {%
+                                    if request.form.get('role')=='faculty' %}checked{% endif %}>
+                                <label
+                                    class="btn btn-outline-warning w-100 h-100 py-3 d-flex flex-column align-items-center justify-content-center"
+                                    for="role_faculty">
+                                    <i class="fas fa-chalkboard-teacher fa-2x mb-2"></i>
+                                    <span class="small">Faculty</span>
+                                </label>
+                            </div>
+                            <div class="col-4">
+                                <input type="radio" class="btn-check" name="role" id="role_admin" value="admin" {% if
+                                    request.form.get('role')=='admin' %}checked{% endif %}>
+                                <label
+                                    class="btn btn-outline-dark w-100 h-100 py-3 d-flex flex-column align-items-center justify-content-center"
+                                    for="role_admin">
+                                    <i class="fas fa-user-shield fa-2x mb-2"></i>
+                                    <span class="small">Admin</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <span class="input-group-text bg-light"><i class="fas fa-envelope text-muted"></i></span>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Email Address"
+                                value="{{ request.form.get('email') or '' }}" required>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <div class="input-group">
+                            <span class="input-group-text bg-light"><i class="fas fa-lock text-muted"></i></span>
+                            <input type="password" class="form-control" id="password" name="password"
+                                placeholder="Password" required>
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary btn-lg shadow-sm">Login</button>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer text-center py-3 bg-light">
+                <small class="text-muted">Don't have an account? <a href="{{ url_for('auth.register') }}"
+                        class="fw-bold">Register as Student</a></small>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,111 @@
+{% extends 'common/base.html' %}
+
+{% block title %}My Bookings - IV Portal{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-4 border-bottom">
+    <h1 class="h2"><i class="fas fa-ticket-alt me-2 text-primary"></i>My Bookings</h1>
+</div>
+
+<div class="row g-4">
+    {% for booking in bookings %}
+    <div class="col-12">
+        <div class="card border-0 shadow-sm overflow-hidden hover-bg-light transition-all">
+            <div class="card-body p-0">
+                <div class="row g-0 align-items-center">
+                    <!-- Date Section -->
+                    <div class="col-md-2 bg-light text-center py-4 border-end border-light">
+                        <h4 class="mb-0 fw-bold text-dark">{{ booking.visit.visit_date.strftime('%d') }}</h4>
+                        <small class="text-uppercase text-muted fw-bold">{{ booking.visit.visit_date.strftime('%b')
+                            }}</small>
+                        <div class="mt-2 text-muted small">{{ booking.visit.visit_date.strftime('%Y') }}</div>
+                    </div>
+
+                    <!-- Info Section -->
+                    <div class="col-md-6 p-4">
+                        <h4 class="card-title fw-bold mb-2">{{ booking.visit.title }}</h4>
+                        <div class="mb-2">
+                            <i class="fas fa-industry text-secondary me-2"></i>{{ booking.visit.industry.name }}
+                        </div>
+                        <div>
+                            <span class="badge bg-light text-dark border me-2">₹{{ booking.visit.fee }}</span>
+                            <span class="badge bg-light text-dark border">ID: #IV-{{ booking.id }}</span>
+                        </div>
+                    </div>
+
+                    <!-- Status & Action Section -->
+                    <div
+                        class="col-md-4 p-4 border-start border-light d-flex flex-column justify-content-center align-items-md-end">
+                        <div class="mb-3 text-center text-md-end">
+                            <small class="text-uppercase text-muted fw-bold d-block mb-1">Status</small>
+                            {% if booking.status == 'Pending' %}
+                            <span class="badge bg-warning text-dark px-3 py-2 rounded-pill">Pending Approval</span>
+                            {% elif booking.status == 'Approved' %}
+                            <span class="badge bg-info text-white px-3 py-2 rounded-pill">Approved</span>
+                            {% elif booking.status == 'Confirmed' %}
+                            <span class="badge bg-success text-white px-3 py-2 rounded-pill">Confirmed</span>
+                            {% elif booking.status == 'Rejected' %}
+                            <span class="badge bg-danger text-white px-3 py-2 rounded-pill">Rejected</span>
+                            {% endif %}
+                        </div>
+
+                        <div class="text-center text-md-end">
+                            {% if booking.status == 'Approved' and booking.payment_status == 'Unpaid' %}
+                            <a href="{{ url_for('student.payment', booking_id=booking.id) }}"
+                                class="btn btn-primary shadow-sm fw-bold">
+                                <i class="fas fa-credit-card me-2"></i>Pay Now
+                            </a>
+                            {% elif booking.status == 'Confirmed' %}
+                            <button class="btn btn-outline-success fw-bold">
+                                <i class="fas fa-download me-2"></i>Download Pass
+                            </button>
+                            {% else %}
+                            <span class="text-muted small fst-italic">No actions available</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Progress Bar / Status Line -->
+            <div class="card-footer p-0 border-0">
+                {% if booking.status == 'Confirmed' %}
+                <div class="progress" style="height: 4px;">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: 100%"></div>
+                </div>
+                {% elif booking.status == 'Approved' %}
+                <div class="progress" style="height: 4px;">
+                    <div class="progress-bar bg-info" role="progressbar" style="width: 66%"></div>
+                </div>
+                {% elif booking.status == 'Pending' %}
+                <div class="progress" style="height: 4px;">
+                    <div class="progress-bar bg-warning" role="progressbar" style="width: 33%"></div>
+                </div>
+                {% elif booking.status == 'Rejected' %}
+                <div class="progress" style="height: 4px;">
+                    <div class="progress-bar bg-danger" role="progressbar" style="width: 100%"></div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="col-12 text-center py-5">
+        <div class="text-muted">
+            <i class="fas fa-ticket-alt fa-3x mb-3"></i>
+            <h4>No Bookings Yet</h4>
+            <p>You haven't applied for any visits. <a href="{{ url_for('student.view_visits') }}">Find one now!</a></p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<style>
+    .hover-bg-light:hover {
+        background-color: #f8f9fa;
+    }
+
+    .transition-all {
+        transition: all 0.3s ease;
+    }
+</style>
+{% endblock %}

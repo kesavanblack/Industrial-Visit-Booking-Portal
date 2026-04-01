@@ -1,0 +1,75 @@
+{% extends 'common/base.html' %}
+
+{% block title %}Analytics - IV Portal{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="mb-4">Advanced Analytics</h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <div class="card shadow">
+            <div class="card-header">Department Participation</div>
+            <div class="card-body">
+                <!-- Placeholder for Chart -->
+                <canvas id="deptChart" height="200"></canvas>
+                <div class="text-center text-muted mt-2">(Chart.js Placeholder)</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 mb-4">
+        <div class="card shadow">
+            <div class="card-header">Industry Popularity</div>
+            <div class="card-body">
+                <!-- Placeholder for Chart -->
+                <canvas id="industryChart" height="200"></canvas>
+                <div class="text-center text-muted mt-2">(Chart.js Placeholder)</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card shadow">
+            <div class="card-header">Monthly Visit Trends</div>
+            <div class="card-body">
+                <canvas id="trendChart" height="100"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Mock Data for Viva Demo
+    const ctx1 = document.getElementById('deptChart');
+    new Chart(ctx1, {
+        type: 'pie',
+        data: {
+            labels: ['CSE', 'ECE', 'MECH', 'IT', 'EEE', 'CIVIL'],
+            datasets: [{
+                label: '# of Participants',
+                data: [45, 30, 25, 40, 20, 15],
+                borderWidth: 1
+            }]
+        }
+    });
+
+    const ctx2 = document.getElementById('industryChart');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Infosys', 'Hyundai', 'ISRO', 'L&T', 'Ashok Leyland'],
+            datasets: [{
+                label: 'Student Interest',
+                data: [120, 90, 150, 60, 80],
+                backgroundColor: 'rgba(54, 162, 235, 0.6)'
+            }]
+        }
+    });
+</script>
+{% endblock %}

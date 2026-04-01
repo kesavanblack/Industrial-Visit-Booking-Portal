@@ -1,0 +1,55 @@
+{% extends 'common/base.html' %}
+
+{% block title %}Reports - IV Portal{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="mb-4">System Reports</h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body text-center">
+                <h5 class="card-title">Student Participation Report</h5>
+                <p class="card-text">Download list of students who have completed at least one visit.</p>
+                <a href="{{ url_for('admin.download_report', type='students_pdf') }}" class="btn btn-primary">Download
+                    PDF</a>
+                <a href="{{ url_for('admin.download_report', type='students_csv') }}" class="btn btn-success">Download
+                    Excel</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body text-center">
+                <h5 class="card-title">Payment Transaction Report</h5>
+                <p class="card-text">Detailed log of all payments made for industrial visits.</p>
+                <a href="{{ url_for('admin.download_report', type='payments') }}" class="btn btn-primary">Download
+                    Report</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body text-center">
+                <h5 class="card-title">Feedback & Rating Report</h5>
+                <p class="card-text">Summary of student feedback for various industries.</p>
+                <a href="{{ url_for('admin.download_report', type='feedback') }}" class="btn btn-warning">View
+                    Summary</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mt-4">
+    <h4>Recent Activity Log</h4>
+    <ul class="list-group">
+        <li class="list-group-item">Visit "Infosys Mysore" created by Admin - <em>2 mins ago</em></li>
+        <li class="list-group-item">Student "John Doe" applied for "Hyundai Plant" - <em>10 mins ago</em></li>
+        <li class="list-group-item">Payment of ₹500 received from "Jane Doe" - <em>1 hour ago</em></li>
+    </ul>
+</div>
+{% endblock %}

@@ -1,0 +1,140 @@
+{% extends 'common/base.html' %}
+
+{% block title %}Faculty Dashboard - IV Portal{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-12">
+        <div class="card bg-white shadow-sm border-0">
+            <div class="card-body d-flex align-items-center justify-content-between p-4">
+                <div>
+                    <h2 class="h3 fw-bold text-dark mb-1">Faculty Dashboard</h2>
+                    <p class="text-muted mb-0"><i class="fas fa-user-tie me-1"></i> {{ faculty.name }} &bull; {{
+                        faculty.designation }} ({{ faculty.department }})</p>
+                </div>
+                <div class="d-none d-md-block">
+                    <i class="fas fa-chalkboard-teacher fa-4x text-gray-200" style="color: #eaecf4;"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-6 mb-4">
+        <div class="stats-card bg-gradient-info shadow h-100">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <div class="text-uppercase text-xs font-weight-bold mb-1" style="opacity: 0.8;">Assigned Visits
+                        </div>
+                        <div class="h3 mb-0 font-weight-bold">{{ assigned_visits | length }}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-calendar-check icon"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 mb-4">
+        <div class="stats-card bg-gradient-warning shadow h-100">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <div class="text-uppercase text-xs font-weight-bold mb-1" style="opacity: 0.8;">Pending
+                            Approvals</div>
+                        <div class="h3 mb-0 font-weight-bold">{{ pending_approvals }}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-user-clock icon"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-8 mb-4">
+        <div class="card shadow mb-4 h-100">
+            <div class="card-header py-3 bg-white d-flex justify-content-between align-items-center">
+                <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-list me-1"></i> My Assigned Visits</h6>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive p-3">
+                    <table class="table table-hover align-middle">
+                        <thead class="bg-light text-dark">
+                            <tr>
+                                <th>Title</th>
+                                <th>Industry</th>
+                                <th>Date</th>
+                                <th>Seats</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for visit in assigned_visits %}
+                            <tr>
+                                <td class="fw-bold">{{ visit.title }}</td>
+                                <td><i class="fas fa-building text-muted me-1"></i> {{ visit.industry.name }}</td>
+                                <td><span class="badge bg-light text-dark border">{{ visit.visit_date }}</span></td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="progress flex-grow-1 me-2" style="height: 5px; width: 50px;">
+                                            <div class="progress-bar bg-success" role="progressbar"
+                                                style="width: {{ (visit.total_seats - visit.available_seats) / visit.total_seats * 100 }}%">
+                                            </div>
+                                        </div>
+                                        <small>{{ visit.available_seats }}/{{ visit.total_seats }}</small>
+                                    </div>
+                                </td>
+                                <td>
+                                    <a href="{{ url_for('faculty.approve_students', visit_id=visit.id) }}"
+                                        class="btn btn-sm btn-outline-primary rounded-pill">
+                                        <i class="fas fa-users-cog me-1"></i> Manage
+                                    </a>
+                                </td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="5" class="text-center py-4 text-muted">
+                                    <i class="fas fa-folder-open fa-2x mb-2 d-block"></i>
+                                    No visits assigned yet.
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4 mb-4">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 bg-white">
+                <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-bolt me-1"></i> Quick Actions</h6>
+            </div>
+            <div class="card-body">
+                <a href="{{ url_for('faculty.attendance') }}"
+                    class="btn btn-success w-100 mb-3 p-3 text-start shadow-sm d-flex align-items-center">
+                    <i class="fas fa-qrcode fa-2x me-3"></i>
+                    <div>
+                        <h6 class="mb-0">Scan Attendance</h6>
+                        <small>Mark student presence via QR</small>
+                    </div>
+                </a>
+                <a href="{{ url_for('faculty.upload_report') }}"
+                    class="btn btn-secondary w-100 p-3 text-start shadow-sm d-flex align-items-center">
+                    <i class="fas fa-file-upload fa-2x me-3"></i>
+                    <div>
+                        <h6 class="mb-0">Upload Report</h6>
+                        <small>Submit visit completion docs</small>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

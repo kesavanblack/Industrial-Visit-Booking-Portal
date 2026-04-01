@@ -1,0 +1,44 @@
+{% extends 'common/base.html' %}
+
+{% block title %}Payment - IV Portal{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow mt-4">
+            <div class="card-header bg-success text-white">
+                <h4>Secure Payment Gateway (Simulation)</h4>
+            </div>
+            <div class="card-body">
+                <p>You are paying for: <strong>{{ booking.visit.title }}</strong></p>
+                <h3 class="text-center my-4">Amount: ₹{{ booking.visit.fee }}</h3>
+
+                <form method="POST">
+                    <input type="hidden" name="amount" value="{{ booking.visit.fee }}">
+
+                    <div class="mb-3">
+                        <label class="form-label">Card Number</label>
+                        <input type="text" class="form-control" placeholder="**** **** **** 1234" disabled
+                            value="4242 4242 4242 4242 (Simulated)">
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Expiry</label>
+                            <input type="text" class="form-control" placeholder="MM/YY" disabled value="12/28">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">CVV</label>
+                            <input type="text" class="form-control" placeholder="123" disabled value="123">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-success w-100 btn-lg">Pay ₹{{ booking.visit.fee }}</button>
+                    <small class="text-muted text-center d-block mt-2">This is a mock payment. No real money is
+                        deducted.</small>
+                    <a href="{{ url_for('student.view_bookings') }}" class="btn btn-link text-center d-block">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

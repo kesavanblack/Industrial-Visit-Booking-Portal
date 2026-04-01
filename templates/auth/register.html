@@ -1,0 +1,103 @@
+{% extends 'common/base.html' %}
+
+{% block title %}Create Account - IV Portal{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center min-vh-75 align-items-center">
+    <div class="col-md-8 col-lg-6 col-xl-5">
+        <div class="text-center mb-4">
+            <h2 class="fw-bold text-dark">Join the Platform</h2>
+            <p class="text-muted">Create your student account to apply for industrial visits.</p>
+        </div>
+
+        <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+            <div class="card-body p-5">
+                <form method="POST" action="{{ url_for('auth.register') }}">
+                    <!-- Name & Reg Number -->
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="name" name="name" placeholder="John Doe"
+                                    required>
+                                <label for="name">Full Name</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="register_number" name="register_number"
+                                    placeholder="REG123" required>
+                                <label for="register_number">Register No.</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dept & Year -->
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <select class="form-select" id="department" name="department" required>
+                                    <option value="" selected disabled>Select...</option>
+                                    <option value="CSE">CSE</option>
+                                    <option value="ECE">ECE</option>
+                                    <option value="EEE">EEE</option>
+                                    <option value="MECH">MECH</option>
+                                    <option value="IT">IT</option>
+                                    <option value="CIVIL">CIVIL</option>
+                                </select>
+                                <label for="department">Department</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <select class="form-select" id="year" name="year" required>
+                                    <option value="" selected disabled>Select...</option>
+                                    <option value="I">I Year</option>
+                                    <option value="II">II Year</option>
+                                    <option value="III">III Year</option>
+                                    <option value="IV">IV Year</option>
+                                </select>
+                                <label for="year">Year</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="form-floating mb-3">
+                        <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com"
+                            required>
+                        <label for="email">Email Address</label>
+                    </div>
+
+                    <!-- Passwords -->
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="password" class="form-control" id="password" name="password"
+                                    placeholder="Password" required>
+                                <label for="password">Password</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="password" class="form-control" id="confirm_password"
+                                    name="confirm_password" placeholder="Confirm" required>
+                                <label for="confirm_password">Confirm</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-dark w-100 py-3 rounded-3 fw-bold shadow-sm"
+                        style="background: linear-gradient(to right, #2c3e50, #4ca1af); border: none;">
+                        <i class="fas fa-user-plus me-2"></i>Create Account
+                    </button>
+
+                    <div class="text-center mt-4">
+                        <p class="text-muted small">Already valid? <a href="{{ url_for('auth.login') }}"
+                                class="text-decoration-none fw-bold">Sign In here</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,115 @@
+{% extends 'common/base.html' %}
+
+{% block title %}Admin Dashboard - IV Portal{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2"><i class="fas fa-tachometer-alt me-2 text-primary"></i>Admin Dashboard</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <a href="{{ url_for('admin.add_industry') }}" class="btn btn-sm btn-primary me-2 shadow-sm">
+            <i class="fas fa-plus me-1"></i> Add Industry
+        </a>
+        <a href="{{ url_for('admin.create_visit') }}" class="btn btn-sm btn-success shadow-sm">
+            <i class="fas fa-calendar-plus me-1"></i> Create Visit
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Industries Card -->
+    <div class="col-xl-4 col-md-6 mb-4">
+        <div class="stats-card bg-gradient-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-uppercase mb-1" style="opacity: 0.8;">
+                            <a href="{{ url_for('admin.manage_industries') }}"
+                                class="text-white text-decoration-none stretched-link">Total Industries</a>
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold">{{ total_industries }}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-industry icon text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Visits Card -->
+    <div class="col-xl-4 col-md-6 mb-4">
+        <div class="stats-card bg-gradient-success shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-uppercase mb-1" style="opacity: 0.8;">
+                            <a href="{{ url_for('admin.manage_visits') }}"
+                                class="text-white text-decoration-none stretched-link">Total Visits</a>
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold">{{ total_visits }}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-bus icon text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Students Card -->
+    <div class="col-xl-4 col-md-6 mb-4">
+        <div class="stats-card bg-gradient-info shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-uppercase mb-1" style="opacity: 0.8;">Total Students
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold">{{ total_students }}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-users icon text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-lg-6 mb-4">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 bg-white">
+                <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-chart-pie me-1"></i> Department
+                    Participation</h6>
+            </div>
+            <div class="card-body">
+                <!-- Using simulated chart image or canvas if JS is there -->
+                <div class="text-center py-5 bg-light rounded">
+                    <i class="fas fa-chart-pie fa-3x text-gray-300 mb-3" style="color: #ccc;"></i>
+                    <p class="text-muted">Analytics visualization enabled in Reports page</p>
+                    <a href="{{ url_for('admin.analytics') }}" class="btn btn-sm btn-outline-primary">View Full
+                        Analytics</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6 mb-4">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 bg-white">
+                <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-tasks me-1"></i> Quick Links</h6>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-3">
+                    <a href="{{ url_for('admin.manage_faculty') }}" class="btn btn-light text-start shadow-sm border"><i
+                            class="fas fa-users-cog me-2 text-warning"></i> Manage Faculty</a>
+                    <a href="{{ url_for('admin.reports') }}" class="btn btn-light text-start shadow-sm border"><i
+                            class="fas fa-file-invoice-dollar me-2 text-success"></i> Payment Reports</a>
+                    <a href="{{ url_for('admin.reports') }}" class="btn btn-light text-start shadow-sm border"><i
+                            class="fas fa-comment-dots me-2 text-info"></i> View Feedback</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

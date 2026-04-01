@@ -1,0 +1,101 @@
+{% extends 'common/base.html' %}
+
+{% block title %}Home - Industrial Visit Booking Portal{% endblock %}
+
+{% block content %}
+<div class="p-5 mb-4 bg-light rounded-3 shadow-sm text-center"
+    style="background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);">
+    <div class="container-fluid py-5">
+        <h1 class="display-5 fw-bold text-dark">Industrial Visit Booking Portal</h1>
+        <p class="col-md-8 fs-4 mx-auto">Streamlining the process of scheduling, approving, and managing industrial
+            visits for students and faculty.</p>
+
+        {% if not current_user.is_authenticated %}
+        <div class="mt-4">
+            <a href="{{ url_for('auth.login') }}" class="btn btn-primary btn-lg me-2">Login</a>
+            <a href="{{ url_for('auth.register') }}" class="btn btn-outline-dark btn-lg">Student Registration</a>
+        </div>
+        {% else %}
+        <div class="mt-4">
+            <a href="{{ url_for('auth.login') }}" class="btn btn-primary btn-lg">Go to Dashboard</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<div class="row align-items-md-stretch">
+    <div class="col-md-6">
+        <div class="h-100 p-5 text-white bg-dark rounded-3">
+            <h2>For Students</h2>
+            <p>Browse upcoming industrial visits, apply for seats, track your application status, and download
+                permission letters instantly.</p>
+            {% if not current_user.is_authenticated %}
+            <a href="{{ url_for('auth.register') }}" class="btn btn-outline-light">Register Now</a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="h-100 p-5 bg-light border rounded-3 text-dark">
+            <h2>For Faculty & Admin</h2>
+            <p>Coordinate visits, approve student applications, track attendance via QR codes, and generate
+                comprehensive reports.</p>
+            {% if not current_user.is_authenticated %}
+            <a href="{{ url_for('auth.login') }}" class="btn btn-outline-secondary">Faculty Login</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="row mt-5">
+    <div class="col-12 text-center mb-4">
+        <h2>Upcoming Visits Preview</h2>
+    </div>
+    <!-- Static Preview for Demo/Viva -->
+    <div class="col-md-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Hyundai Motor Plant</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Sriperumbudur</h6>
+                <p class="card-text">Experience the state-of-the-art manufacturing process.</p>
+            </div>
+            <div class="card-footer bg-transparent">
+                <small class="text-muted">Date: 2026-03-15</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">ISRO Propulsion Complex</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Mahendragiri</h6>
+                <p class="card-text">A unique opportunity to visit the rocket testing facility.</p>
+            </div>
+            <div class="card-footer bg-transparent">
+                <small class="text-muted">Date: 2026-04-10</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Infosys Campus</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Mysore</h6>
+                <p class="card-text">Explore the world's largest corporate training center.</p>
+            </div>
+            <div class="card-footer bg-transparent">
+                <small class="text-muted">Date: 2026-05-05</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5 mb-5" id="contact">
+    <div class="row">
+        <div class="col-12 text-center">
+            <h3>Contact Us</h3>
+            <p>Industrial Visit Coordinator: Prof. XYZ (CSE Dept)</p>
+            <p>Email: iv_coordinator@college.edu | Phone: +91 98765 43210</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
